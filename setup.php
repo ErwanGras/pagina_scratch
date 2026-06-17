@@ -137,12 +137,18 @@ try {
         `fecha_envio` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", $isRender);
 
-    // ---- Insertar usuario admin (con hash correcto generado aquí mismo) ----
+    // ---- Insertar usuario admin (con hash correcto generado aquí mismo) y carlos ----
     $adminExiste = $pdo->query("SELECT COUNT(*) FROM usuarios WHERE usuario='admin'")->fetchColumn();
     if (!$adminExiste) {
         $hash = password_hash('admin123', PASSWORD_DEFAULT);
         $stmt = $pdo->prepare("INSERT INTO usuarios (usuario, password, nombre) VALUES (?, ?, ?)");
         $stmt->execute(['admin', $hash, 'Administrador General']);
+    }
+    $carlosExiste = $pdo->query("SELECT COUNT(*) FROM usuarios WHERE usuario='carlos'")->fetchColumn();
+    if (!$carlosExiste) {
+        $hash = password_hash('2026', PASSWORD_DEFAULT);
+        $stmt = $pdo->prepare("INSERT INTO usuarios (usuario, password, nombre) VALUES (?, ?, ?)");
+        $stmt->execute(['carlos', $hash, 'Prof. Carlos Giménez']);
     }
 
     // ---- Insertar alumnos de prueba ----

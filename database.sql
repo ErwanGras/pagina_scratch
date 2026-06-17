@@ -100,9 +100,10 @@ CREATE TABLE `contacto_mensajes` (
 -- INSERCIÓN DE DATOS DE MUESTRA PARA PRUEBAS (XAMPP LISTO)
 -- ====================================================================
 
--- Usuario Administrador por defecto: admin / admin123
+-- Usuario Administrador por defecto: admin / admin123 y carlos / 2026
 INSERT INTO `usuarios` (`usuario`, `password`, `nombre`) VALUES
-('admin', '$2y$10$MX5n0Z2XU/XGvV8W.N34k.H/T6k7m4BfFqGfH2Y1yW5v7s8q7pCqy', 'Administrador General');
+('admin', '$2y$10$MX5n0Z2XU/XGvV8W.N34k.H/T6k7m4BfFqGfH2Y1yW5v7s8q7pCqy', 'Administrador General'),
+('carlos', '$2y$10$zD5GkEE3Z723g47kLEFBB.PK0zsxaryqeHp60Y4KFOdvGwQ0bLv66', 'Prof. Carlos Giménez');
 
 -- Alumnos de 5° y 6° Grado
 INSERT INTO `alumnos` (`nombre`, `apellido`, `grado`, `fecha_registro`) VALUES
