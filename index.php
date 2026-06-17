@@ -284,15 +284,21 @@ try {
                     </div>
                     <div class="row g-4">
                         <div class="col-md-6">
-                            <div class="card border-0 bg-primary text-white p-4 rounded-4 shadow-sm h-100">
-                                <h5 class="fw-bold text-warning mb-2">🎯 Misión</h5>
-                                <p class="fs-8 mb-0 text-justify text-white-50">Brindar una educación integral de calidad, promoviendo la formación académica, técnica y humana de los estudiantes, fomentando valores, innovación y compromiso con la sociedad.</p>
+                            <div class="card border-0 bg-primary text-white rounded-4 shadow-sm h-100 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=400&h=200&q=80" class="card-img-top object-fit-cover" style="height: 120px;" alt="Misión">
+                                <div class="p-4">
+                                    <h5 class="fw-bold text-warning mb-2">🎯 Misión</h5>
+                                    <p class="fs-8 mb-0 text-justify text-white-50">Brindar una educación integral de calidad, promoviendo la formación académica, técnica y humana de los estudiantes, fomentando valores, innovación y compromiso con la sociedad.</p>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="card border-0 bg-primary text-white p-4 rounded-4 shadow-sm h-100">
-                                <h5 class="fw-bold text-warning mb-2">👁️ Visión</h5>
-                                <p class="fs-8 mb-0 text-justify text-white-50">Ser una institución educativa líder y referente a nivel regional y nacional, reconocida por la excelencia académica, la innovación tecnológica y la formación de ciudadanos comprometidos.</p>
+                            <div class="card border-0 bg-primary text-white rounded-4 shadow-sm h-100 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=400&h=200&q=80" class="card-img-top object-fit-cover" style="height: 120px;" alt="Visión">
+                                <div class="p-4">
+                                    <h5 class="fw-bold text-warning mb-2">👁️ Visión</h5>
+                                    <p class="fs-8 mb-0 text-justify text-white-50">Ser una institución educativa líder y referente a nivel regional y nacional, reconocida por la excelencia académica, la innovación tecnológica y la formación de ciudadanos comprometidos.</p>
+                                </div>
                             </div>
                         </div>
                     </div>

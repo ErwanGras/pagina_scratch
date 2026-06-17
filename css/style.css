@@ -134,11 +134,11 @@ h1, h2, .text-gradient {
 
 /* Efectos de Elevación y Tarjetas Glassmorphism */
 .card, .bg-white {
-    background: var(--glass-bg) !important;
+    background: var(--glass-bg);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border: 1px solid var(--glass-border) !important;
-    box-shadow: var(--glass-shadow) !important;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
 }
 
 .hover-lift {
