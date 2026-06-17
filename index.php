@@ -742,7 +742,7 @@ try {
                                 <div class="position-absolute top-0 end-0 m-4 text-warning opacity-10" style="font-size: 8rem; font-family: Georgia, serif; line-height: 1; pointer-events: none;">“</div>
                                 <div class="d-flex align-items-center gap-3 mb-4">
                                     <div class="flex-shrink-0" style="width: 70px; height: 70px;">
-                                        <img src="<?= htmlspecialchars($test['ruta_foto'] ?: 'uploads/img/alumno_clara.jpg') ?>" class="w-100 h-100 object-fit-cover rounded-circle border border-2 border-primary" alt="<?= htmlspecialchars($test['nombre_alumno']) ?>">
+                                        <img src="<?= htmlspecialchars($test['ruta_foto'] ?: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80') ?>" class="w-100 h-100 object-fit-cover rounded-circle border border-2 border-primary" alt="<?= htmlspecialchars($test['nombre_alumno']) ?>">
                                     </div>
                                     <div>
                                         <h4 class="fw-bold text-primary fs-5 mb-0"><?= htmlspecialchars($test['nombre_alumno']) ?></h4>

@@ -223,10 +223,17 @@ $listado = $conn->query("SELECT * FROM testimonios_bti ORDER BY id DESC")->fetch
                         <?php if (empty($listado)): ?>
                             <p class="text-center py-4 text-muted">No hay testimonios registrados todavía.</p>
                         <?php else: ?>
-                            <?php foreach ($listado as $item): ?>
+                            <?php foreach ($listado as $item): 
+                                $photo_src = $item['ruta_foto'];
+                                if (empty($photo_src)) {
+                                    $photo_src = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80';
+                                } elseif (strpos($photo_src, 'http') !== 0) {
+                                    $photo_src = '../' . $photo_src;
+                                }
+                            ?>
                                 <div class="border rounded-3 p-3 d-flex gap-3 align-items-start">
                                     <div class="flex-shrink-0">
-                                        <img src="../<?= htmlspecialchars($item['ruta_foto'] ?: 'img/galeria/foto_scratch_1.jpg') ?>"
+                                        <img src="<?= htmlspecialchars($photo_src) ?>"
                                             class="thumb" alt="<?= htmlspecialchars($item['nombre_alumno']) ?>">
                                     </div>
                                     <div class="flex-grow-1">
