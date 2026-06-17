@@ -1,0 +1,29 @@
+====================================================================
+COLEGIO CRECE - PLANIFICACIÓN CURRICULAR DE INFORMÁTICA
+====================================================================
+GRADO: 6° Grado de Educación Escolar Básica
+UNIDAD 1: Juegos Interactivos y Sensores
+DOCENTE: Equipo Técnico del 3° BTI
+DURACIÓN ESTIMADA: 5 Semanas (10 Horas Reloj)
+====================================================================
+
+1. OBJETIVOS DE APRENDIZAJE:
+   - Programar videojuegos estructurados usando variables para contabilizar puntajes.
+   - Utilizar sensores avanzados de color y colisión entre objetos para definir el estado de juego.
+   - Diseñar interfaces dinámicas de "Inicio" y "Fin de Juego" (Game Over).
+
+2. CONTENIDOS CURRICULARES:
+   - Uso de variables globales para almacenar datos numéricos (Puntos, Vidas, Tiempo).
+   - Bloques de sensores: tocando color, tocando objeto, distancia a.
+   - Creación de laberintos complejos y algoritmos de retroceso al chocar paredes.
+
+3. ACTIVIDADES PROPUESTAS:
+   - Actividad 1: Juego del Laberinto donde el gato retrocede a la posición inicial al tocar las paredes negras.
+   - Actividad 2: Contador de tiempo regresivo que finalice el juego automáticamente.
+   - Actividad 3: Añadir recompensas (monedas) en posiciones fijas que se oculten e incrementen el puntaje al ser tocadas por el jugador.
+
+4. INSTRUMENTOS DE EVALUACIÓN:
+   - Rúbrica de evaluación de la complejidad del laberinto e implementación de variables de puntaje.
+   - Presentación oral y demostración en vivo ante el docente y compañeros de clase.
+====================================================================
+Documento didáctico de muestra - Proyecto Integrador 3° BTI CRECE 2026.

@@ -1,0 +1,325 @@
+/* ====================================================================
+   CRECE - Proyecto Integrador 3° BTI
+   Hoja de Estilos Personalizada Premium (WOW Design)
+   ==================================================================== */
+
+/* Variables y Colores del CRECE Premium (Rojo y Azul Institucional) */
+:root {
+    --crece-blue: #9c131a; /* Rojo oscuro del escudo */
+    --crece-blue-hover: #730e13;
+    --crece-gold: #1b3668; /* Azul del escudo */
+    --crece-gold-hover: #122445;
+    
+    --bg-light-blue: #fcf8f8;
+    --primary-soft: rgba(156, 19, 26, 0.08);
+    --primary-color: #9c131a;
+    --purple-soft: rgba(27, 54, 104, 0.08);
+    --purple: #1b3668;
+    --accent-gradient: linear-gradient(135deg, #9c131a 0%, #d4222b 100%);
+    --gold-gradient: linear-gradient(135deg, #1b3668 0%, #2f56a6 100%);
+    
+    /* Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.4);
+    --glass-shadow: 0 8px 32px 0 rgba(11, 37, 69, 0.1);
+}
+
+/* Tipografía */
+body {
+    font-family: 'Outfit', sans-serif;
+    color: #1e293b;
+    background-color: var(--bg-light-blue);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Navegación Glassmorphism */
+.navbar {
+    background: rgba(11, 37, 69, 0.95) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.nav-link {
+    position: relative;
+    padding-bottom: 0.25rem;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: var(--crece-gold);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after, .nav-link.active::after {
+    width: 100%;
+}
+
+/* Títulos con Gradiente Premium */
+h1, h2, .text-gradient {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Modificación de Botones Premium */
+.bg-primary {
+    background: var(--accent-gradient) !important;
+}
+
+.text-primary {
+    color: var(--crece-blue) !important;
+}
+
+.btn-primary {
+    background: var(--accent-gradient) !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(11, 37, 69, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: all 0.4s ease;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(11, 37, 69, 0.3);
+}
+
+.btn-warning {
+    background: var(--gold-gradient) !important;
+    border: none !important;
+    color: #0b2545 !important;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-warning:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+}
+
+.btn-outline-primary {
+    color: var(--crece-blue) !important;
+    border: 2px solid var(--crece-blue) !important;
+    background: transparent !important;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    background: var(--crece-blue) !important;
+    color: #ffffff !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(11, 37, 69, 0.2);
+}
+
+/* Efectos de Elevación y Tarjetas Glassmorphism */
+.card, .bg-white {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--glass-border) !important;
+    box-shadow: var(--glass-shadow) !important;
+}
+
+.hover-lift {
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(11, 37, 69, 0.15) !important;
+}
+
+.hover-slide {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.hover-slide:hover {
+    transform: translateX(8px);
+    background: #ffffff !important;
+    box-shadow: 0 10px 25px rgba(11, 37, 69, 0.1) !important;
+    border-left: 4px solid var(--crece-blue) !important;
+}
+
+/* Utilidades Soft Badges */
+.bg-primary-soft {
+    background-color: var(--primary-soft);
+    color: var(--crece-blue);
+    border: 1px solid rgba(11, 37, 69, 0.1);
+}
+
+.bg-purple-soft {
+    background-color: var(--purple-soft);
+    color: var(--purple);
+    border: 1px solid rgba(124, 58, 237, 0.1);
+}
+
+/* Fondos Dinámicos */
+.bg-light-blue {
+    background: radial-gradient(circle at 10% 20%, rgba(11, 37, 69, 0.05) 0%, rgba(248, 250, 252, 1) 90%);
+    position: relative;
+}
+
+.bg-light-blue::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.bg-dark-gradient {
+    background: linear-gradient(to top, rgba(11,37,69,0.9) 0%, rgba(11,37,69,0) 100%);
+}
+
+/* Tarjetas de Galería */
+.galeria-card {
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.transition-img {
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.galeria-card:hover .transition-img {
+    transform: scale(1.1);
+}
+
+.galeria-card::after {
+    content: '🔍 Ampliar';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+    background: rgba(11, 37, 69, 0.8);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.galeria-card:hover::after {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Estructura del Lightbox Modal */
+.lightbox-modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(11, 37, 69, 0.98);
+    backdrop-filter: blur(5px);
+    z-index: 2000;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.lightbox-modal.show {
+    opacity: 1; pointer-events: auto;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 90%; max-height: 80%;
+    display: flex; flex-direction: column; align-items: center;
+    animation: zoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.lightbox-content img {
+    max-width: 100%; max-height: 65vh;
+    object-fit: contain; border-radius: 12px;
+    border: 2px solid rgba(255,255,255,0.2);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+.lightbox-caption {
+    margin-top: 20px; text-align: center; color: #ffffff;
+    max-width: 600px; font-weight: 300; letter-spacing: 0.5px;
+}
+
+.lightbox-close {
+    position: absolute; top: 25px; right: 35px;
+    background: none; border: none; color: #ffffff;
+    font-size: 3rem; cursor: pointer; z-index: 2001;
+    transition: all 0.3s ease;
+}
+
+.lightbox-close:hover {
+    color: var(--crece-gold);
+    transform: rotate(90deg);
+}
+
+/* Animaciones */
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Estilos de Redes Sociales */
+.social-icon-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 46px; height: 46px; border-radius: 50%;
+    background-color: rgba(255,255,255,0.1);
+    color: #ffffff; border: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.social-icon-btn:hover {
+    background: var(--gold-gradient);
+    color: var(--crece-blue);
+    transform: translateY(-5px) scale(1.1);
+    border-color: transparent;
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.4);
+}
+
+/* Ajustes adicionales */
+.text-justify { text-align: justify; }
+.fs-7 { font-size: 0.95rem !important; }
+.fs-8 { font-size: 0.85rem !important; }
+.max-w-600 { max-width: 600px; margin-left: auto; margin-right: auto; }
+.max-w-400 { max-width: 400px; margin-left: auto; margin-right: auto; }
+.tracking-wide { letter-spacing: 1px; }
+.tracking-wider { letter-spacing: 2px; }
+
+/* Dashboard Cards Admin */
+.dashboard-widget {
+    transition: all 0.3s ease;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+.dashboard-widget:hover {
+    transform: translateY(-5px);
+}
+
+@media (max-width: 575.98px) {
+    .border-end-sm { border-right: none !important; }
+    .border-start-sm { border-left: none !important; border-top: 1px solid #eaecf0; padding-top: 15px; }
+}
