@@ -6,22 +6,32 @@
 // Luego ELIMINAR o renombrar este archivo por seguridad.
 // ====================================================================
 
-$host    = 'localhost';
-$user    = 'root';
-$pass    = '';           // En XAMPP la contraseña de root es vacía por defecto
+$host = getenv('DB_HOST') ?: 'localhost';
+$db   = getenv('DB_NAME') ?: 'crece_scratch';
+$user = getenv('DB_USER') ?: 'root';
+$pass = getenv('DB_PASS') !== false ? getenv('DB_PASS') : '';
+$port = getenv('DB_PORT') ?: '3306';
 $charset = 'utf8mb4';
 
 try {
-    // Conectar sin especificar base de datos
-    $pdo = new PDO("mysql:host=$host;charset=$charset", $user, $pass, [
-        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    ]);
+    // Si estamos en local (localhost sin DB_HOST o DB_HOST=localhost), intentamos conectar sin especificar base de datos para crearla
+    if ($host === 'localhost' || getenv('DB_HOST') === false) {
+        $pdo = new PDO("mysql:host=$host;port=$port;charset=$charset", $user, $pass, [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ]);
 
-    // ---- Crear base de datos ----
-    $pdo->exec("CREATE DATABASE IF NOT EXISTS `crece_scratch`
-                DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
-    $pdo->exec("USE `crece_scratch`");
+        // ---- Crear base de datos ----
+        $pdo->exec("CREATE DATABASE IF NOT EXISTS `$db`
+                    DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+        $pdo->exec("USE `$db`");
+    } else {
+        // En producción / DB remota, conectamos directamente a la DB ya creada por el proveedor hosting
+        $pdo = new PDO("mysql:host=$host;port=$port;dbname=$db;charset=$charset", $user, $pass, [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ]);
+    }
 
     // ---- Crear tablas ----
     $pdo->exec("CREATE TABLE IF NOT EXISTS `usuarios` (
@@ -188,7 +198,7 @@ try {
 <div class="card border-0 shadow-lg rounded-4 p-5 text-center" style="max-width:520px;">
     <div style="font-size:4rem;">✅</div>
     <h2 class="fw-bold mt-3" style="color:#0b2545;">¡Base de datos lista!</h2>
-    <p class="text-muted mt-2">La base de datos <strong>crece_scratch</strong> fue creada con todas las tablas y datos de prueba correctamente.</p>
+    <p class="text-muted mt-2">La base de datos <strong>' . htmlspecialchars($db) . '</strong> fue configurada con todas las tablas y datos de prueba correctamente.</p>
     <hr>
     <div class="text-start mb-3">
         <p class="mb-1"><strong>Credenciales de Administrador:</strong></p>
