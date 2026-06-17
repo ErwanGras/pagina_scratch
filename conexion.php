@@ -40,6 +40,19 @@ try {
         // Habilitar soporte de claves foráneas en SQLite
         $conn->exec("PRAGMA foreign_keys = ON;");
     }
+
+    // Redirección automática al setup si la base de datos está vacía (no tiene tablas)
+    $currentPage = basename($_SERVER['PHP_SELF']);
+    if ($currentPage !== 'setup.php') {
+        try {
+            $conn->query("SELECT 1 FROM usuarios LIMIT 1");
+        } catch (\PDOException $e) {
+            // Determinar prefijo según si el archivo actual está en la subcarpeta admin/
+            $prefix = (strpos($_SERVER['PHP_SELF'], '/admin/') !== false) ? '../' : '';
+            header("Location: " . $prefix . "setup.php");
+            exit;
+        }
+    }
 } catch (\PDOException $e) {
     die("Error crítico de conexión a la base de datos: " . $e->getMessage());
 }
