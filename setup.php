@@ -183,10 +183,10 @@ try {
     $fotosExisten = $pdo->query("SELECT COUNT(*) FROM galeria_fotos")->fetchColumn();
     if (!$fotosExisten) {
         db_exec($pdo, "INSERT INTO galeria_fotos (titulo, descripcion, ruta_imagen, grado, fecha) VALUES
-            ('Primeros pasos con Bloques',  'Alumnos de 5° explorando bloques de movimiento.',          'uploads/img/foto_scratch_1.jpg', '5', '2026-04-15'),
-            ('Programación de Escenarios',  'Estudiantes de 6° diseñando cambio dinámico de fondos.',   'uploads/img/foto_scratch_2.jpg', '6', '2026-04-22'),
-            ('Presentación de Proyectos',   'Alumnos compartiendo sus videojuegos ante la clase.',       'uploads/img/foto_scratch_3.jpg', '5', '2026-05-18'),
-            ('Taller de Lógica Avanzada',   'Variables y operadores matemáticos aplicados a juegos.',    'uploads/img/foto_scratch_4.jpg', '6', '2026-06-05')", $isRender);
+            ('Primeros pasos con Bloques',  'Alumnos de 5° explorando bloques de movimiento.',          'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=800&q=80', '5', '2026-04-15'),
+            ('Programación de Escenarios',  'Estudiantes de 6° diseñando cambio dinámico de fondos.',   'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80', '6', '2026-04-22'),
+            ('Presentación de Proyectos',   'Alumnos compartiendo sus videojuegos ante la clase.',       'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80', '5', '2026-05-18'),
+            ('Taller de Lógica Avanzada',   'Variables y operadores matemáticos aplicados a juegos.',    'https://images.unsplash.com/photo-1516534775068-ba3e84589d90?auto=format&fit=crop&w=800&q=80', '6', '2026-06-05')", $isRender);
     }
 
     // ---- Insertar planificaciones ----
@@ -207,12 +207,12 @@ try {
              'Fue una experiencia maravillosa. Ver cómo los niños lograban animar sus personajes me hizo comprender el valor de compartir el conocimiento.',
              'Aprendí a simplificar conceptos técnicos de lógica y a tener mucha paciencia al enseñar.',
              'La mayor dificultad fue mantener la atención del grupo al inicio; lo superamos con desafíos más dinámicos.',
-             'uploads/img/foto_scratch_1.jpg'),
+             'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80'),
             ('Diego Ortigoza',
              'Enseñar programación a 6° grado nos retó como estudiantes de informática. Tuvimos que dominar la comunicación didáctica además de la técnica.',
              'Desarrollé habilidades interpersonales y metodologías ágiles para resolver dudas en tiempo real.',
              'Explicar variables y sensores de colisión requirió crear ejemplos cotidianos y divertidos en el pizarrón.',
-             'uploads/img/foto_scratch_2.jpg')", $isRender);
+             'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=150&q=80')", $isRender);
     }
 
     echo '<!DOCTYPE html>

@@ -218,21 +218,21 @@ try {
                         </div>
                         <div class="carousel-inner">
                             <div class="carousel-item active" data-bs-interval="4000">
-                                <img src="uploads/img/foto_scratch_1.jpg" class="d-block w-100 object-fit-cover" style="height: 420px;" alt="Clase de Scratch">
+                                <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80" class="d-block w-100 object-fit-cover" style="height: 420px;" alt="Clase de Scratch">
                                 <div class="carousel-caption d-none d-md-block bg-dark-gradient rounded px-3 py-2 text-start">
                                     <h5 class="fw-bold text-warning">Interacción Interactiva</h5>
                                     <p class="fs-7 text-light mb-0">Estudiantes aprendiendo la lógica computacional con bloques.</p>
                                 </div>
                             </div>
                             <div class="carousel-item" data-bs-interval="4000">
-                                <img src="uploads/img/foto_scratch_2.jpg" class="d-block w-100 object-fit-cover" style="height: 420px;" alt="Proyectos Creativos">
+                                <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=1200&q=80" class="d-block w-100 object-fit-cover" style="height: 420px;" alt="Proyectos Creativos">
                                 <div class="carousel-caption d-none d-md-block bg-dark-gradient rounded px-3 py-2 text-start">
                                     <h5 class="fw-bold text-warning">Lógica de Bucles</h5>
                                     <p class="fs-7 text-light mb-0">Diseño de laberintos y programación de variables en 6° grado.</p>
                                 </div>
                             </div>
                             <div class="carousel-item" data-bs-interval="4000">
-                                <img src="uploads/img/foto_scratch_3.jpg" class="d-block w-100 object-fit-cover" style="height: 420px;" alt="Exposiciones en Aula">
+                                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" class="d-block w-100 object-fit-cover" style="height: 420px;" alt="Exposiciones en Aula">
                                 <div class="carousel-caption d-none d-md-block bg-dark-gradient rounded px-3 py-2 text-start">
                                     <h5 class="fw-bold text-warning">Exposición y Defensa</h5>
                                     <p class="fs-7 text-light mb-0">Alumnos compartiendo sus videojuegos desarrollados al final del taller.</p>
