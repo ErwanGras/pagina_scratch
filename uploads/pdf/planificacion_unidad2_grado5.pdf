@@ -1,0 +1,29 @@
+====================================================================
+COLEGIO CRECE - PLANIFICACIÓN CURRICULAR DE INFORMÁTICA
+====================================================================
+GRADO: 5° Grado de Educación Escolar Básica
+UNIDAD 2: Estructuras de Control (Bucles y Condicionales)
+DOCENTE: Equipo Técnico del 3° BTI
+DURACIÓN ESTIMADA: 5 Semanas (10 Horas Reloj)
+====================================================================
+
+1. OBJETIVOS DE APRENDIZAJE:
+   - Utilizar bucles repetitivos ("por siempre", "repetir") para optimizar el código.
+   - Introducir la toma de decisiones lógica usando la estructura condicional simple ("si... entonces").
+   - Controlar personajes utilizando las teclas de dirección del teclado.
+
+2. CONTENIDOS CURRICULARES:
+   - Bucles indeterminados y determinados en la programación por bloques.
+   - Condicionales lógicos y sensores de presión de tecla.
+   - Coordinación de múltiples objetos usando mensajes de envío ("enviar mensaje" y "al recibir").
+
+3. ACTIVIDADES PROPUESTAS:
+   - Actividad 1: Programar el movimiento de una nave espacial en las 4 direcciones.
+   - Actividad 2: Crear una simulación de semáforo interactivo usando bucles y tiempos de espera.
+   - Actividad 3: Crear el juego "Esquiva los asteroides" donde los objetos caen verticalmente en posiciones aleatorias y deben ser esquivados por la nave del jugador.
+
+4. INSTRUMENTOS DE EVALUACIÓN:
+   - Lista de cotejo sobre uso adecuado de bloques repetitivos frente a secuencias lineales repetidas.
+   - Evaluación del código fuente del proyecto integrador de unidad.
+====================================================================
+Documento didáctico de muestra - Proyecto Integrador 3° BTI CRECE 2026.

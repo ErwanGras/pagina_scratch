@@ -1,0 +1,29 @@
+====================================================================
+COLEGIO CRECE - PLANIFICACIÓN CURRICULAR DE INFORMÁTICA
+====================================================================
+GRADO: 6° Grado de Educación Escolar Básica
+UNIDAD 2: Clonación de Objetos y Lógica de Colisiones
+DOCENTE: Equipo Técnico del 3° BTI
+DURACIÓN ESTIMADA: 6 Semanas (12 Horas Reloj)
+====================================================================
+
+1. OBJETIVOS DE APRENDIZAJE:
+   - Crear clones de objetos para generar elementos repetitivos en pantalla de manera dinámica.
+   - Utilizar operadores lógicos combinados (Y, O, NO) para controles complejos de colisión.
+   - Optimizar el código fuente de Scratch eliminando clones obsoletos para evitar el lag.
+
+2. CONTENIDOS CURRICULARES:
+   - Sentencias de control avanzado: "crear clon de mí mismo", "al comenzar como clon", "eliminar este clon".
+   - Generación de objetos en posiciones X e Y aleatorias.
+   - Física básica de proyectiles y colisiones de disparos con enemigos flotantes.
+
+3. ACTIVIDADES PROPUESTAS:
+   - Actividad 1: Lluvia de manzanas flotantes que el jugador debe atrapar con una cesta usando clonación.
+   - Actividad 2: Juego estilo "Space Invaders" simplificado, donde los clones enemigos aparecen arriba y se mueven hacia abajo mientras la nave del jugador les dispara.
+   - Actividad 3: Sistema de récords locales (pantalla de High Score).
+
+4. INSTRUMENTOS DE EVALUACIÓN:
+   - Proyecto integrador bimestral de Scratch evaluado mediante coevaluación y autoevaluación grupal.
+   - Defensa técnica individual de la lógica del clon implementado.
+====================================================================
+Documento didáctico de muestra - Proyecto Integrador 3° BTI CRECE 2026.
