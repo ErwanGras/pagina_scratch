@@ -173,10 +173,10 @@ try {
     $proyExisten = $pdo->query("SELECT COUNT(*) FROM proyectos_scratch")->fetchColumn();
     if (!$proyExisten) {
         db_exec($pdo, "INSERT INTO proyectos_scratch (titulo, descripcion, ruta_pdf, url_proyecto, grado, fecha_creacion) VALUES
-            ('Aventura Espacial',        'Videojuego de naves esquivando asteroides usando flechas del teclado.',         'uploads/pdf/guia_proyecto_aventura.pdf',  'https://scratch.mit.edu/projects/100000001', '5', '2026-05-12'),
-            ('Laberinto Inteligente',    'El usuario guía un gato por un laberinto usando lógica de colisiones.',         'uploads/pdf/guia_proyecto_laberinto.pdf', 'https://scratch.mit.edu/projects/100000002', '6', '2026-05-20'),
-            ('Dialogando con mi Mascota','Historia animada con diálogos interactivos y cambios de fondo.',                'uploads/pdf/guia_proyecto_mascota.pdf',   'https://scratch.mit.edu/projects/100000003', '5', '2026-04-18'),
-            ('Pintor Galáctico',         'Herramienta de dibujo interactiva con eventos del mouse y el lápiz de Scratch.', 'uploads/pdf/guia_proyecto_pintor.pdf',    'https://scratch.mit.edu/projects/100000004', '6', '2026-06-02')", $isRender);
+            ('Recolector de Estrellas',   'Juego interactivo de atrapar estrellas en movimiento en el menor tiempo posible.', 'uploads/pdf/Proyecto_Scratch_Recolectando_Estrellas.pdf', 'https://scratch.mit.edu/projects/532111135', '5', '2026-05-12'),
+            ('Laberinto Inteligente',     'Guía el objeto a través del laberinto evitando chocar con las paredes usando las flechas del teclado.', 'uploads/pdf/Proyecto_Scratch_Laberinto_Balon.pdf', 'https://scratch.mit.edu/projects/198883970', '6', '2026-05-20'),
+            ('Suma y Aprende',            'Juego educativo de matemáticas donde sumas números generados aleatoriamente para ganar puntos.', 'uploads/pdf/Proyecto_Scratch_Suma_Matematica.pdf', 'https://scratch.mit.edu/projects/505885250', '5', '2026-04-18'),
+            ('Carrera de Autos',          'Juego de carreras de autos en una pista cerrada con obstáculos y control de tiempo.', 'uploads/pdf/analisis_proyecto_scratch.pdf', 'https://scratch.mit.edu/projects/445947054', '6', '2026-06-02')", $isRender);
     }
 
     // ---- Insertar fotos de galería (rutas en uploads/img/) ----
@@ -193,10 +193,16 @@ try {
     $planExisten = $pdo->query("SELECT COUNT(*) FROM planificaciones")->fetchColumn();
     if (!$planExisten) {
         db_exec($pdo, "INSERT INTO planificaciones (titulo, descripcion, ruta_archivo, grado, fecha) VALUES
-            ('Introducción a Scratch',             'Interfaz, bloques de movimiento y eventos iniciales.',   'uploads/pdf/planificacion_unidad1_grado5.pdf', '5', '2026-03-15'),
-            ('Bucles y Condicionales',             'Estructuras de control repetitivas y toma de decisiones.', 'uploads/pdf/planificacion_unidad2_grado5.pdf', '5', '2026-04-10'),
-            ('Juegos Interactivos y Sensores',     'Mecánicas de juego usando sensores y variables.',        'uploads/pdf/planificacion_unidad1_grado6.pdf', '6', '2026-05-05'),
-            ('Clonación y Colisiones Avanzadas',   'Clones dinámicos y detección precisa de contactos.',     'uploads/pdf/planificacion_unidad2_grado6.pdf', '6', '2026-06-01')", $isRender);
+            ('Introducción a Scratch',             'Unidad 1: Interfaz, bloques de movimiento y eventos iniciales.', 'uploads/pdf/Guia_Scratch_5Grado_clase_01.pdf', '5', '2026-03-15'),
+            ('Animaciones y Diálogos',             'Unidad 2: Coordinación de diálogos e historias animadas.', 'uploads/pdf/Guia_Scratch_5Grado_clase_02.pdf', '5', '2026-04-10'),
+            ('Eventos y Teclado',                  'Unidad 3: Controlar objetos usando eventos físicos y teclas.', 'uploads/pdf/Guia_Scratch_5Grado_clase_03.pdf', '5', '2026-05-05'),
+            ('Estructuras Repetitivas',             'Unidad 4: Bucles simples y repeticiones de acciones.', 'uploads/pdf/Guia_Scratch_5Grado_clase_04.pdf', '5', '2026-05-20'),
+            ('Proyecto Inicial',                   'Unidad 5: Creación del primer minijuego interactivo.', 'uploads/pdf/Guia_Scratch_5Grado_clase_05.pdf', '5', '2026-06-01'),
+            ('Repaso y Estructura',                'Clase 1: Repaso general de lógica y organización del área de trabajo.', 'uploads/pdf/Clase_01_Repaso_de_Scratch_y_Organización.pdf', '6', '2026-03-15'),
+            ('Animación y Audio',                  'Clase 2: Efectos visuales avanzados, cambios de disfraces y sonidos sincronizados.', 'uploads/pdf/Clase_02_Animaciones_Avanzadas_y_Sonidos.pdf', '6', '2026-04-12'),
+            ('Movimientos y Física',               'Clase 3: Coordenadas relativas, rebotes en bordes y lógica de velocidad.', 'uploads/pdf/Clase_03_Movimientos_Complejos_y_Física_Básica.pdf', '6', '2026-05-08'),
+            ('Control de Flujo Avanzado',          'Clase 4: Bucles condicionales complejos y sensores de colisión.', 'uploads/pdf/Clase_04_Condicionales_Avanzadas_Bucles_y_Eventos.pdf', '6', '2026-05-25'),
+            ('Variables y Marcadores',             'Clase 5: Sumar puntos, manejo de vidas y cierre del proyecto integrador.', 'uploads/pdf/Clase_05_Variables_Puntuación_y_Proyecto_Final.pdf', '6', '2026-06-05')", $isRender);
     }
 
     // ---- Insertar testimonios ----
