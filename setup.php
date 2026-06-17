@@ -6,61 +6,92 @@
 // Luego ELIMINAR o renombrar este archivo por seguridad.
 // ====================================================================
 
-$host = getenv('DB_HOST') ?: 'localhost';
-$db   = getenv('DB_NAME') ?: 'crece_scratch';
-$user = getenv('DB_USER') ?: 'root';
-$pass = getenv('DB_PASS') !== false ? getenv('DB_PASS') : '';
-$port = getenv('DB_PORT') ?: '3306';
-$charset = 'utf8mb4';
+// Detectamos si estamos ejecutando en Render (producción)
+$isRender = getenv('RENDER') !== false;
+
+function db_exec($pdo, $sql, $isRender) {
+    if ($isRender) {
+        // Si es SQLite, ignorar comandos específicos de creación/uso de base de datos MySQL
+        if (stripos($sql, 'CREATE DATABASE') !== false || stripos($sql, 'USE ') === 0) {
+            return true;
+        }
+        // Adaptar consultas para SQLite
+        // 1. Reemplazar AUTO_INCREMENT con AUTOINCREMENT y INT con INTEGER
+        $sql = preg_replace('/`id` INT AUTO_INCREMENT PRIMARY KEY/i', '`id` INTEGER PRIMARY KEY AUTOINCREMENT', $sql);
+        $sql = preg_replace('/`id` INT\s+PRIMARY\s+KEY\s+AUTO_INCREMENT/i', '`id` INTEGER PRIMARY KEY AUTOINCREMENT', $sql);
+        // 2. Reemplazar ENUM(...) con TEXT
+        $sql = preg_replace('/ENUM\([^)]+\)/i', 'TEXT', $sql);
+        // 3. Quitar ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+        $sql = preg_replace('/\) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci/i', ')', $sql);
+        $sql = preg_replace('/\) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4/i', ')', $sql);
+    }
+    return $pdo->exec($sql);
+}
 
 try {
-    // Si estamos en local (localhost sin DB_HOST o DB_HOST=localhost), intentamos conectar sin especificar base de datos para crearla
-    if ($host === 'localhost' || getenv('DB_HOST') === false) {
-        $pdo = new PDO("mysql:host=$host;port=$port;charset=$charset", $user, $pass, [
+    if ($isRender) {
+        // Usamos SQLite en Render
+        $dbPath = __DIR__ . '/database.sqlite';
+        $pdo = new PDO("sqlite:$dbPath", null, null, [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ]);
-
-        // ---- Crear base de datos ----
-        $pdo->exec("CREATE DATABASE IF NOT EXISTS `$db`
-                    DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
-        $pdo->exec("USE `$db`");
+        $pdo->exec("PRAGMA foreign_keys = ON;");
     } else {
-        // En producción / DB remota, conectamos directamente a la DB ya creada por el proveedor hosting
-        $pdo = new PDO("mysql:host=$host;port=$port;dbname=$db;charset=$charset", $user, $pass, [
-            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        ]);
+        // Usamos MySQL local (XAMPP / Laragon)
+        $host = getenv('DB_HOST') ?: 'localhost';
+        $db   = getenv('DB_NAME') ?: 'crece_scratch';
+        $user = getenv('DB_USER') ?: 'root';
+        $pass = getenv('DB_PASS') !== false ? getenv('DB_PASS') : '';
+        $port = getenv('DB_PORT') ?: '3306';
+        $charset = 'utf8mb4';
+
+        if ($host === 'localhost' || getenv('DB_HOST') === false) {
+            $pdo = new PDO("mysql:host=$host;port=$port;charset=$charset", $user, $pass, [
+                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            ]);
+
+            // ---- Crear base de datos ----
+            $pdo->exec("CREATE DATABASE IF NOT EXISTS `$db`
+                        DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+            $pdo->exec("USE `$db`");
+        } else {
+            $pdo = new PDO("mysql:host=$host;port=$port;dbname=$db;charset=$charset", $user, $pass, [
+                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            ]);
+        }
     }
 
     // ---- Crear tablas ----
-    $pdo->exec("CREATE TABLE IF NOT EXISTS `usuarios` (
+    db_exec($pdo, "CREATE TABLE IF NOT EXISTS `usuarios` (
         `id` INT AUTO_INCREMENT PRIMARY KEY,
         `usuario` VARCHAR(50) NOT NULL UNIQUE,
         `password` VARCHAR(255) NOT NULL,
         `nombre` VARCHAR(100) DEFAULT NULL,
         `fecha_creacion` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", $isRender);
 
-    $pdo->exec("CREATE TABLE IF NOT EXISTS `alumnos` (
+    db_exec($pdo, "CREATE TABLE IF NOT EXISTS `alumnos` (
         `id` INT AUTO_INCREMENT PRIMARY KEY,
         `nombre` VARCHAR(50) NOT NULL,
         `apellido` VARCHAR(50) NOT NULL,
         `grado` ENUM('5','6') NOT NULL,
         `fecha_registro` DATE NOT NULL,
         `activo` TINYINT(1) DEFAULT 1
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", $isRender);
 
-    $pdo->exec("CREATE TABLE IF NOT EXISTS `asistencia` (
+    db_exec($pdo, "CREATE TABLE IF NOT EXISTS `asistencia` (
         `id` INT AUTO_INCREMENT PRIMARY KEY,
         `alumno_id` INT NOT NULL,
         `fecha` DATE NOT NULL,
         `estado` ENUM('Presente','Ausente','Justificado') NOT NULL,
         `observacion` VARCHAR(255) DEFAULT NULL,
         FOREIGN KEY (`alumno_id`) REFERENCES `alumnos` (`id`) ON DELETE CASCADE
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", $isRender);
 
-    $pdo->exec("CREATE TABLE IF NOT EXISTS `proyectos_scratch` (
+    db_exec($pdo, "CREATE TABLE IF NOT EXISTS `proyectos_scratch` (
         `id` INT AUTO_INCREMENT PRIMARY KEY,
         `titulo` VARCHAR(100) NOT NULL,
         `descripcion` TEXT DEFAULT NULL,
@@ -68,43 +99,43 @@ try {
         `url_proyecto` VARCHAR(255) DEFAULT NULL,
         `grado` ENUM('5','6') NOT NULL,
         `fecha_creacion` DATE NOT NULL
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", $isRender);
 
-    $pdo->exec("CREATE TABLE IF NOT EXISTS `galeria_fotos` (
+    db_exec($pdo, "CREATE TABLE IF NOT EXISTS `galeria_fotos` (
         `id` INT AUTO_INCREMENT PRIMARY KEY,
         `titulo` VARCHAR(100) NOT NULL,
         `descripcion` TEXT DEFAULT NULL,
         `ruta_imagen` VARCHAR(255) NOT NULL,
         `grado` ENUM('5','6') NOT NULL,
         `fecha` DATE NOT NULL
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", $isRender);
 
-    $pdo->exec("CREATE TABLE IF NOT EXISTS `planificaciones` (
+    db_exec($pdo, "CREATE TABLE IF NOT EXISTS `planificaciones` (
         `id` INT AUTO_INCREMENT PRIMARY KEY,
         `titulo` VARCHAR(100) NOT NULL,
         `descripcion` TEXT DEFAULT NULL,
         `ruta_archivo` VARCHAR(255) NOT NULL,
         `grado` ENUM('5','6') NOT NULL,
         `fecha` DATE NOT NULL
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", $isRender);
 
-    $pdo->exec("CREATE TABLE IF NOT EXISTS `testimonios_bti` (
+    db_exec($pdo, "CREATE TABLE IF NOT EXISTS `testimonios_bti` (
         `id` INT AUTO_INCREMENT PRIMARY KEY,
         `nombre_alumno` VARCHAR(100) NOT NULL,
         `testimonio` TEXT NOT NULL,
         `aprendizaje` TEXT NOT NULL,
         `dificultad` TEXT NOT NULL,
         `ruta_foto` VARCHAR(255) DEFAULT NULL
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", $isRender);
 
-    $pdo->exec("CREATE TABLE IF NOT EXISTS `contacto_mensajes` (
+    db_exec($pdo, "CREATE TABLE IF NOT EXISTS `contacto_mensajes` (
         `id` INT AUTO_INCREMENT PRIMARY KEY,
         `nombre` VARCHAR(100) NOT NULL,
         `email` VARCHAR(100) NOT NULL,
         `asunto` VARCHAR(150) NOT NULL,
         `mensaje` TEXT NOT NULL,
         `fecha_envio` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", $isRender);
 
     // ---- Insertar usuario admin (con hash correcto generado aquí mismo) ----
     $adminExiste = $pdo->query("SELECT COUNT(*) FROM usuarios WHERE usuario='admin'")->fetchColumn();
@@ -117,16 +148,16 @@ try {
     // ---- Insertar alumnos de prueba ----
     $alumnosExisten = $pdo->query("SELECT COUNT(*) FROM alumnos")->fetchColumn();
     if (!$alumnosExisten) {
-        $pdo->exec("INSERT INTO alumnos (nombre, apellido, grado, fecha_registro) VALUES
+        db_exec($pdo, "INSERT INTO alumnos (nombre, apellido, grado, fecha_registro) VALUES
             ('Lucas',    'García',     '5', '2026-03-10'),
             ('Sofía',    'Martínez',   '5', '2026-03-10'),
             ('Mateo',    'Rodríguez',  '6', '2026-03-10'),
             ('Valentina','López',      '6', '2026-03-10'),
             ('Thiago',   'Gómez',      '5', '2026-03-11'),
-            ('Emma',     'Fernández',  '6', '2026-03-11')");
+            ('Emma',     'Fernández',  '6', '2026-03-11')", $isRender);
 
         // Asistencia
-        $pdo->exec("INSERT INTO asistencia (alumno_id, fecha, estado, observacion) VALUES
+        db_exec($pdo, "INSERT INTO asistencia (alumno_id, fecha, estado, observacion) VALUES
             (1,'2026-06-15','Presente','Trabajó en bucles'),
             (2,'2026-06-15','Presente','Terminó animación de iniciales'),
             (3,'2026-06-15','Presente','Inició juego de laberinto'),
@@ -135,43 +166,43 @@ try {
             (6,'2026-06-15','Presente','Avanzó en lógica de colisiones'),
             (1,'2026-06-16','Presente','Comenzó animación espacial'),
             (2,'2026-06-16','Ausente', 'Sin justificar'),
-            (3,'2026-06-16','Presente','Terminó colisiones del laberinto')");
+            (3,'2026-06-16','Presente','Terminó colisiones del laberinto')", $isRender);
     }
 
     // ---- Insertar proyectos de prueba ----
     $proyExisten = $pdo->query("SELECT COUNT(*) FROM proyectos_scratch")->fetchColumn();
     if (!$proyExisten) {
-        $pdo->exec("INSERT INTO proyectos_scratch (titulo, descripcion, ruta_pdf, url_proyecto, grado, fecha_creacion) VALUES
+        db_exec($pdo, "INSERT INTO proyectos_scratch (titulo, descripcion, ruta_pdf, url_proyecto, grado, fecha_creacion) VALUES
             ('Aventura Espacial',        'Videojuego de naves esquivando asteroides usando flechas del teclado.',         'uploads/pdf/guia_proyecto_aventura.pdf',  'https://scratch.mit.edu/projects/100000001', '5', '2026-05-12'),
             ('Laberinto Inteligente',    'El usuario guía un gato por un laberinto usando lógica de colisiones.',         'uploads/pdf/guia_proyecto_laberinto.pdf', 'https://scratch.mit.edu/projects/100000002', '6', '2026-05-20'),
             ('Dialogando con mi Mascota','Historia animada con diálogos interactivos y cambios de fondo.',                'uploads/pdf/guia_proyecto_mascota.pdf',   'https://scratch.mit.edu/projects/100000003', '5', '2026-04-18'),
-            ('Pintor Galáctico',         'Herramienta de dibujo interactiva con eventos del mouse y el lápiz de Scratch.','uploads/pdf/guia_proyecto_pintor.pdf',    'https://scratch.mit.edu/projects/100000004', '6', '2026-06-02')");
+            ('Pintor Galáctico',         'Herramienta de dibujo interactiva con eventos del mouse y el lápiz de Scratch.', 'uploads/pdf/guia_proyecto_pintor.pdf',    'https://scratch.mit.edu/projects/100000004', '6', '2026-06-02')", $isRender);
     }
 
     // ---- Insertar fotos de galería (rutas en uploads/img/) ----
     $fotosExisten = $pdo->query("SELECT COUNT(*) FROM galeria_fotos")->fetchColumn();
     if (!$fotosExisten) {
-        $pdo->exec("INSERT INTO galeria_fotos (titulo, descripcion, ruta_imagen, grado, fecha) VALUES
+        db_exec($pdo, "INSERT INTO galeria_fotos (titulo, descripcion, ruta_imagen, grado, fecha) VALUES
             ('Primeros pasos con Bloques',  'Alumnos de 5° explorando bloques de movimiento.',          'uploads/img/foto_scratch_1.jpg', '5', '2026-04-15'),
             ('Programación de Escenarios',  'Estudiantes de 6° diseñando cambio dinámico de fondos.',   'uploads/img/foto_scratch_2.jpg', '6', '2026-04-22'),
             ('Presentación de Proyectos',   'Alumnos compartiendo sus videojuegos ante la clase.',       'uploads/img/foto_scratch_3.jpg', '5', '2026-05-18'),
-            ('Taller de Lógica Avanzada',   'Variables y operadores matemáticos aplicados a juegos.',    'uploads/img/foto_scratch_4.jpg', '6', '2026-06-05')");
+            ('Taller de Lógica Avanzada',   'Variables y operadores matemáticos aplicados a juegos.',    'uploads/img/foto_scratch_4.jpg', '6', '2026-06-05')", $isRender);
     }
 
     // ---- Insertar planificaciones ----
     $planExisten = $pdo->query("SELECT COUNT(*) FROM planificaciones")->fetchColumn();
     if (!$planExisten) {
-        $pdo->exec("INSERT INTO planificaciones (titulo, descripcion, ruta_archivo, grado, fecha) VALUES
+        db_exec($pdo, "INSERT INTO planificaciones (titulo, descripcion, ruta_archivo, grado, fecha) VALUES
             ('Introducción a Scratch',             'Interfaz, bloques de movimiento y eventos iniciales.',   'uploads/pdf/planificacion_unidad1_grado5.pdf', '5', '2026-03-15'),
-            ('Bucles y Condicionales',             'Estructuras de control repetitivas y toma de decisiones.','uploads/pdf/planificacion_unidad2_grado5.pdf', '5', '2026-04-10'),
+            ('Bucles y Condicionales',             'Estructuras de control repetitivas y toma de decisiones.', 'uploads/pdf/planificacion_unidad2_grado5.pdf', '5', '2026-04-10'),
             ('Juegos Interactivos y Sensores',     'Mecánicas de juego usando sensores y variables.',        'uploads/pdf/planificacion_unidad1_grado6.pdf', '6', '2026-05-05'),
-            ('Clonación y Colisiones Avanzadas',   'Clones dinámicos y detección precisa de contactos.',    'uploads/pdf/planificacion_unidad2_grado6.pdf', '6', '2026-06-01')");
+            ('Clonación y Colisiones Avanzadas',   'Clones dinámicos y detección precisa de contactos.',     'uploads/pdf/planificacion_unidad2_grado6.pdf', '6', '2026-06-01')", $isRender);
     }
 
     // ---- Insertar testimonios ----
     $testExisten = $pdo->query("SELECT COUNT(*) FROM testimonios_bti")->fetchColumn();
     if (!$testExisten) {
-        $pdo->exec("INSERT INTO testimonios_bti (nombre_alumno, testimonio, aprendizaje, dificultad, ruta_foto) VALUES
+        db_exec($pdo, "INSERT INTO testimonios_bti (nombre_alumno, testimonio, aprendizaje, dificultad, ruta_foto) VALUES
             ('Clara Benítez',
              'Fue una experiencia maravillosa. Ver cómo los niños lograban animar sus personajes me hizo comprender el valor de compartir el conocimiento.',
              'Aprendí a simplificar conceptos técnicos de lógica y a tener mucha paciencia al enseñar.',
@@ -181,7 +212,7 @@ try {
              'Enseñar programación a 6° grado nos retó como estudiantes de informática. Tuvimos que dominar la comunicación didáctica además de la técnica.',
              'Desarrollé habilidades interpersonales y metodologías ágiles para resolver dudas en tiempo real.',
              'Explicar variables y sensores de colisión requirió crear ejemplos cotidianos y divertidos en el pizarrón.',
-             'uploads/img/foto_scratch_2.jpg')");
+             'uploads/img/foto_scratch_2.jpg')", $isRender);
     }
 
     echo '<!DOCTYPE html>
