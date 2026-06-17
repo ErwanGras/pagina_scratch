@@ -197,9 +197,14 @@ $listado = $conn->query("SELECT * FROM testimonios_bti ORDER BY id DESC")->fetch
                         <div class="mb-4">
                             <label class="form-label fs-8 fw-bold text-muted">Foto del Alumno (Opcional)</label>
                             <input type="file" name="foto_file" class="form-control" accept="image/*">
-                            <?php if ($edit_item && !empty($edit_item['ruta_foto'])): ?>
+                            <?php if ($edit_item && !empty($edit_item['ruta_foto'])): 
+                                $edit_photo = $edit_item['ruta_foto'];
+                                if (strpos($edit_photo, 'http') !== 0) {
+                                    $edit_photo = '../' . $edit_photo;
+                                }
+                            ?>
                                 <div class="d-flex align-items-center gap-2 mt-2">
-                                    <img src="../<?= htmlspecialchars($edit_item['ruta_foto']) ?>" class="thumb" alt="Foto actual">
+                                    <img src="<?= htmlspecialchars($edit_photo) ?>" class="thumb" alt="Foto actual">
                                     <span class="text-muted fs-8">Foto actual (sube una nueva para reemplazarla)</span>
                                 </div>
                             <?php endif; ?>

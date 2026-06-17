@@ -226,7 +226,13 @@ try {
                                 <?php foreach ($listado as $foto): ?>
                                     <div class="col-sm-6 col-md-4">
                                         <div class="card h-100 border border-light shadow-none overflow-hidden rounded-3 position-relative">
-                                            <img src="../<?= htmlspecialchars($foto['ruta_imagen']) ?>" class="gal-preview" alt="<?= htmlspecialchars($foto['titulo']) ?>">
+                                            <?php 
+                                            $gal_img = $foto['ruta_imagen'];
+                                            if (strpos($gal_img, 'http') !== 0) {
+                                                $gal_img = '../' . $gal_img;
+                                            }
+                                            ?>
+                                            <img src="<?= htmlspecialchars($gal_img) ?>" class="gal-preview" alt="<?= htmlspecialchars($foto['titulo']) ?>">
                                             <span class="badge <?= $foto['grado'] === '5' ? 'bg-primary' : 'bg-purple' ?> position-absolute top-0 end-0 m-2 fs-9">
                                                 <?= $foto['grado'] ?>° Grado
                                             </span>

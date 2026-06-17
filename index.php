@@ -139,7 +139,7 @@ try {
 <body data-bs-spy="scroll" data-bs-target="#navbar-main" data-bs-offset="100">
 
     <!-- Navegación Fija -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top shadow-sm" id="navbar-main">
+    <nav class="navbar navbar-expand-xl navbar-dark bg-primary sticky-top shadow-sm" id="navbar-main">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center gap-2" href="#inicio">
                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="#9c131a" stroke="#1b3668" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));">
@@ -166,7 +166,7 @@ try {
                     <li class="nav-item"><a class="nav-link text-uppercase fs-7 fw-semibold" href="#asistencia">Asistencia</a></li>
                     <li class="nav-item"><a class="nav-link text-uppercase fs-7 fw-semibold" href="#experiencias">Testimonios</a></li>
                     <li class="nav-item"><a class="nav-link text-uppercase fs-7 fw-semibold" href="#contacto">Contacto</a></li>
-                    <li class="nav-item ms-lg-3"><a class="btn btn-warning btn-sm text-primary fw-bold text-uppercase px-3" href="admin/login.php">Acceso Admin</a></li>
+                    <li class="nav-item ms-lg-3"><a class="btn btn-warning btn-sm text-white fw-bold text-uppercase px-3" href="admin/login.php">Acceso Admin</a></li>
                 </ul>
             </div>
         </div>
